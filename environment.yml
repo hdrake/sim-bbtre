@@ -1,0 +1,17 @@
+name: bblturb-analysis
+channels:
+  - conda-forge
+dependencies:
+  # Temporarily pinning dask version
+  - dask!=2021.3.0
+  - xarray
+  - xrft
+  - jupyterlab
+  - netCDF4
+  - h5py
+  - pytables
+  - gsw
+  - matplotlib
+  - xgcm
+  - xmitgcm
+  - xhistogram==0.1.2
