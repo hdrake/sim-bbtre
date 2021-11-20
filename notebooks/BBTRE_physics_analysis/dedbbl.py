@@ -19,7 +19,7 @@ def bbl_exp_spinup(
         T=10000*365*86400., dt=100*365*86400.,
         k0=5.2e-5, k1=1.8e-3, h=230.,
         N=1.3E-3, f=-5.3e-5, θ=1.26E-3, σ=1.,
-        output_path = None,
+        output_path = None, Pr=False,
     ):
 
     #===== Set up domain =====
@@ -42,7 +42,10 @@ def bbl_exp_spinup(
     problem.parameters['k'] = k
     
     nu = domain.new_field(name='nu')
-    nu['g'] = (k0+k1*np.exp(-z/h))*σ
+    if Pr:
+        nu['g'] = (k0+k1*np.exp(-z/h)) * (1. + 59118. /(225.**2)*z*np.exp(-z/225.))
+    else:
+        nu['g'] = (k0+k1*np.exp(-z/h)) * σ
     problem.parameters['nu'] = nu
 
     # Main equations
@@ -101,7 +104,6 @@ def bbl_exp_spinup(
     solver.stop_iteration = np.inf
 
     # Main loop
-    year = 365.*24*60*60
     while solver.ok:
         solver.step(dt);
 
@@ -112,7 +114,6 @@ def bbl_exp_spinup(
         'bz': itp(bz['g'])+N**2, 'vz': itp(vz['g']),
         'b': b['g'], 'u': u['g'], 'v': v['g']
     }
-    
     return output
 
 def bbl_to_ds(bbl):
