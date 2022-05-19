@@ -1,9 +1,9 @@
-name: bblturb-analysis
+name: sim-bbtre-plus
 channels:
   - conda-forge
 dependencies:
-  # Temporarily pinning dask version
-  - dask!=2021.3.0
+  - numba
+  - dask
   - xarray
   - xrft
   - jupyterlab
@@ -14,4 +14,4 @@ dependencies:
   - matplotlib
   - xgcm
   - xmitgcm
-  - xhistogram==0.1.2
+  - xhistogram

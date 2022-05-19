@@ -120,14 +120,14 @@ def add_rotated_coords(ds, θ, shift_vertical = True):
     grid = Grid(ds, periodic=['X', 'Y'])
         
     ds = ds.assign_coords({
-        'Zr': (['XC', 'Z'], (ds['XC']*np.sin(θ) + ds['Z']*np.cos(θ)).values),
-        'Xr': (['XC', 'Z'], (ds['XC']*np.cos(θ) - ds['Z']*np.sin(θ)).values),
-        'Zr_V': (['XC', 'Z'], (ds['XC']*np.sin(θ) + ds['Z']*np.cos(θ)).values),
-        'Xr_V': (['XC', 'Z'], (ds['XC']*np.cos(θ) - ds['Z']*np.sin(θ)).values),
-        'Zr_U': (['XG', 'Z'], (ds['XG']*np.sin(θ) + ds['Z']*np.cos(θ)).values),
-        'Xr_U': (['XG', 'Z'], (ds['XG']*np.cos(θ) - ds['Z']*np.sin(θ)).values),
-        'Zr_W': (['XC', 'Zl'], (ds['XC']*np.sin(θ) + ds['Zl']*np.cos(θ)).values),
-        'Xr_W': (['XC', 'Zl'], (ds['XC']*np.cos(θ) - ds['Zl']*np.sin(θ)).values)
+        'Zr': (ds['XC']*np.sin(θ) + ds['Z']*np.cos(θ)).transpose(),
+        'Xr': (ds['XC']*np.cos(θ) - ds['Z']*np.sin(θ)).transpose(),
+        'Zr_V': (ds['XC']*np.sin(θ) + ds['Z']*np.cos(θ)).transpose(),
+        'Xr_V': (ds['XC']*np.cos(θ) - ds['Z']*np.sin(θ)).transpose(),
+        'Zr_U': (ds['XG']*np.sin(θ) + ds['Z']*np.cos(θ)).transpose(),
+        'Xr_U': (ds['XG']*np.cos(θ) - ds['Z']*np.sin(θ)).transpose(),
+        'Zr_W': (ds['XC']*np.sin(θ) + ds['Zl']*np.cos(θ)).transpose(),
+        'Xr_W': (ds['XC']*np.cos(θ) - ds['Zl']*np.sin(θ)).transpose()
     })
 
     ds['Depthr'] = ds['Depth'] - ds['XC']*np.tan(θ)
